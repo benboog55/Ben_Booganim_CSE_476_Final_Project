@@ -8,7 +8,7 @@ Confirm that Python 3 is available in your environment.
 ### 2. Install the Required Python Package
 Run the following command:
 
-```bash
+bash
 pip install requests
 
 ---
