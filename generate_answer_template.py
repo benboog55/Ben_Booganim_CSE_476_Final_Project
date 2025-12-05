@@ -172,10 +172,16 @@ def load_questions(path: Path) -> List[Dict[str, Any]]:
 def build_answers(questions: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     answers = []
     for idx, question in enumerate(questions, start=1):
-        # Example: assume you have an agent loop that produces an answer string.
         real_answer = agent_loop(question["input"])
+
+        if type(real_answer) is str:
+            if real_answer.lower().startswith("answer:"):
+                real_answer = real_answer[7:].strip()
+            real_answer = real_answer.strip()
+
         answers.append({"output": real_answer})
     return answers
+
 
 
 def validate_results(
