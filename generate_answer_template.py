@@ -171,15 +171,22 @@ def load_questions(path: Path) -> List[Dict[str, Any]]:
 
 def build_answers(questions: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     answers = []
-    for idx, question in enumerate(questions, start=1):
-        real_answer = agent_loop(question["input"])
 
-        if type(real_answer) is str:
-            if real_answer.lower().startswith("answer:"):
-                real_answer = real_answer[7:].strip()
-            real_answer = real_answer.strip()
+    for q in questions:
+        final_answer = answer(q["input"])
 
-        answers.append({"output": real_answer})
+        if type(final_answer) is str:
+            final_answer = final_answer.strip()
+            if final_answer.lower().startswith("answer:"):
+                final_answer = final_answer[7:].strip()
+        else:
+            final_answer = ""
+
+        if not final_answer:
+            final_answer = "I don't know"
+
+        answers.append({"output": final_answer})
+
     return answers
 
 
